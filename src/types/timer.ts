@@ -34,3 +34,14 @@ export interface WorkoutSession {
   cyclesCompleted: number;
   totalTime: number; // in seconds
 }
+
+export interface WorkoutTemplate {
+  id: string;
+  name: string;
+  description: string;
+  config: WorkoutConfig;
+  createdAt: number;
+  updatedAt: number;
+  isFavorite: boolean;
+  timesUsed: number;
+}

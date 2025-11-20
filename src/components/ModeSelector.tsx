@@ -1,10 +1,12 @@
-import { WorkoutMode } from "@/types/timer";
+﻿import { WorkoutMode } from "@/types/timer";
 import { Card } from "@/components/ui/card";
+import { QuickStartMenu } from "@/components/QuickStartMenu";
 import { Dumbbell, Zap, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface ModeSelectorProps {
   onSelect: (mode: WorkoutMode) => void;
+  onTemplateSelect: (templateId: string) => void;
 }
 
 const MODES = [
@@ -38,16 +40,19 @@ const MODES = [
   },
 ];
 
-export const ModeSelector = ({ onSelect }: ModeSelectorProps) => {
+export const ModeSelector = ({ onSelect, onTemplateSelect }: ModeSelectorProps) => {
   return (
     <div className="flex flex-col min-h-screen bg-background p-6">
-      <div className="mb-8 text-center">
+      <div className="mb-6 text-center">
         <h1 className="text-5xl font-display font-extrabold text-foreground mb-2 tracking-tight">
           FitTimer
         </h1>
         <p className="text-base text-muted-foreground font-body">
           Escolha seu tipo de treino
         </p>
+      </div>
+      <div className="flex justify-center mb-6">
+        <QuickStartMenu onTemplateSelect={onTemplateSelect} />
       </div>
       <div className="grid grid-cols-1 gap-4 max-w-md mx-auto w-full">
         {MODES.map((mode, index) => {
@@ -83,7 +88,7 @@ export const ModeSelector = ({ onSelect }: ModeSelectorProps) => {
             </motion.div>
           );
         })}
-      </div>{" "}
+      </div>
       <div className="mt-auto pt-8 text-center">
         <p className="text-xs text-muted-foreground">
           Cronômetro inteligente para musculação

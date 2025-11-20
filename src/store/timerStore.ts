@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+﻿import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { WorkoutConfig, WorkoutSession, TimerState } from '@/types/timer';
+import { WorkoutConfig, WorkoutSession, TimerState, WorkoutTemplate } from '@/types/timer';
 
 interface TimerStore {
   // Configuration
@@ -20,6 +20,16 @@ interface TimerStore {
   history: WorkoutSession[];
   addToHistory: (session: WorkoutSession) => void;
   clearHistory: () => void;
+  
+  // Templates
+  templates: WorkoutTemplate[];
+  saveTemplate: (name: string, description: string) => void;
+  loadTemplate: (templateId: string) => void;
+  deleteTemplate: (templateId: string) => void;
+  updateTemplate: (templateId: string, updates: Partial<Omit<WorkoutTemplate, 'id' | 'createdAt' | 'timesUsed'>>) => void;
+  toggleFavorite: (templateId: string) => void;
+  duplicateTemplate: (templateId: string) => void;
+  createTemplateFromHistory: (sessionId: string, name: string, description: string) => void;
   
   // Timer controls
   start: () => void;
@@ -48,6 +58,7 @@ export const useTimerStore = create<TimerStore>()(
       timerState: DEFAULT_TIMER_STATE,
       currentSession: null,
       history: [],
+      templates: [],
 
       setConfig: (config) => set({ config }),
 
@@ -98,10 +109,113 @@ export const useTimerStore = create<TimerStore>()(
 
       addToHistory: (session) =>
         set((state) => ({
-          history: [session, ...state.history].slice(0, 100), // Keep last 100 sessions
+          history: [session, ...state.history].slice(0, 100),
         })),
 
       clearHistory: () => set({ history: [] }),
+
+      // Template methods
+      saveTemplate: (name, description) => {
+        const { config } = get();
+        if (!config) return;
+
+        const template: WorkoutTemplate = {
+          id: Date.now().toString(),
+          name,
+          description,
+          config,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          isFavorite: false,
+          timesUsed: 0,
+        };
+
+        set((state) => ({
+          templates: [...state.templates, template],
+        }));
+      },
+
+      loadTemplate: (templateId) => {
+        const { templates } = get();
+        const template = templates.find(t => t.id === templateId);
+        if (!template) return;
+
+        set({
+          config: template.config,
+          templates: templates.map(t =>
+            t.id === templateId
+              ? { ...t, timesUsed: t.timesUsed + 1, updatedAt: Date.now() }
+              : t
+          ),
+        });
+      },
+
+      deleteTemplate: (templateId) => {
+        set((state) => ({
+          templates: state.templates.filter(t => t.id !== templateId),
+        }));
+      },
+
+      updateTemplate: (templateId, updates) => {
+        set((state) => ({
+          templates: state.templates.map(t =>
+            t.id === templateId
+              ? { ...t, ...updates, updatedAt: Date.now() }
+              : t
+          ),
+        }));
+      },
+
+      toggleFavorite: (templateId) => {
+        set((state) => ({
+          templates: state.templates.map(t =>
+            t.id === templateId
+              ? { ...t, isFavorite: !t.isFavorite, updatedAt: Date.now() }
+              : t
+          ),
+        }));
+      },
+
+      duplicateTemplate: (templateId) => {
+        const { templates } = get();
+        const template = templates.find(t => t.id === templateId);
+        if (!template) return;
+
+        const duplicate: WorkoutTemplate = {
+          ...template,
+          id: Date.now().toString(),
+          name: `${template.name} (cópia)`,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          timesUsed: 0,
+          isFavorite: false,
+        };
+
+        set((state) => ({
+          templates: [...state.templates, duplicate],
+        }));
+      },
+
+      createTemplateFromHistory: (sessionId, name, description) => {
+        const { history } = get();
+        const session = history.find(s => s.id === sessionId);
+        if (!session) return;
+
+        const template: WorkoutTemplate = {
+          id: Date.now().toString(),
+          name,
+          description,
+          config: session.config,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          isFavorite: false,
+          timesUsed: 0,
+        };
+
+        set((state) => ({
+          templates: [...state.templates, template],
+        }));
+      },
 
       start: () => {
         const { startSession } = get();
@@ -131,13 +245,11 @@ export const useTimerStore = create<TimerStore>()(
         const { mode, exercises } = config;
         const nextIndex = timerState.currentExerciseIndex + 1;
 
-        // Handle dropset mode differently
         if (mode === 'dropset') {
           const nextDrop = timerState.currentDrop + 1;
           const dropsPerExercise = config.dropsPerExercise || 3;
 
           if (nextDrop >= dropsPerExercise) {
-            // Cycle complete, start rest
             set((state) => ({
               timerState: {
                 ...state.timerState,
@@ -148,7 +260,6 @@ export const useTimerStore = create<TimerStore>()(
               },
             }));
           } else {
-            // Next drop
             set((state) => ({
               timerState: {
                 ...state.timerState,
@@ -160,9 +271,7 @@ export const useTimerStore = create<TimerStore>()(
           return;
         }
 
-        // Handle other modes
         if (nextIndex >= exercises.length) {
-          // Cycle complete, start rest
           set((state) => ({
             timerState: {
               ...state.timerState,
@@ -173,7 +282,6 @@ export const useTimerStore = create<TimerStore>()(
             },
           }));
         } else {
-          // Next exercise
           set((state) => ({
             timerState: {
               ...state.timerState,
@@ -203,6 +311,7 @@ export const useTimerStore = create<TimerStore>()(
       partialize: (state) => ({
         history: state.history,
         config: state.config,
+        templates: state.templates,
       }),
     }
   )

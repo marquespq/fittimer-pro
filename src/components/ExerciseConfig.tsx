@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { WorkoutMode, WorkoutConfig, Exercise } from "@/types/timer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ interface ExerciseConfigProps {
   mode: WorkoutMode;
   onBack: () => void;
   onStart: (config: WorkoutConfig) => void;
+  onConfigChange?: (config: WorkoutConfig) => void;
 }
 
 const DEFAULT_EXERCISES_COUNT = {
@@ -32,6 +33,7 @@ export const ExerciseConfig = ({
   mode,
   onBack,
   onStart,
+  onConfigChange,
 }: ExerciseConfigProps) => {
   const [exercises, setExercises] = useState<Exercise[]>(
     Array.from({ length: DEFAULT_EXERCISES_COUNT[mode] }, (_, i) => ({
@@ -42,6 +44,30 @@ export const ExerciseConfig = ({
   const [exerciseTime, setExerciseTime] = useState(40);
   const [restTime, setRestTime] = useState(60);
   const [dropsPerExercise, setDropsPerExercise] = useState(3);
+
+  // Notify parent of config changes
+  useEffect(() => {
+    if (onConfigChange) {
+      const validExercises = exercises.filter((ex) => ex.name.trim() !== "");
+      if (validExercises.length > 0) {
+        const config: WorkoutConfig = {
+          mode,
+          exercises: validExercises,
+          exerciseTime,
+          restTime,
+          ...(mode === "dropset" && { dropsPerExercise }),
+        };
+        onConfigChange(config);
+      }
+    }
+  }, [
+    exercises,
+    exerciseTime,
+    restTime,
+    dropsPerExercise,
+    mode,
+    onConfigChange,
+  ]);
 
   const handleExerciseNameChange = (index: number, name: string) => {
     const newExercises = [...exercises];
