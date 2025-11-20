@@ -14,12 +14,14 @@
 ## ✨ Funcionalidades
 
 ### 🎯 Modos de Treino
+
 - **Biset** - 2 exercícios alternados
 - **Trissérie** - 3 exercícios em sequência
 - **Dropset** - 1 exercício com 2-5 quedas de carga
 - **Série Gigante** - 4-8 exercícios seguidos
 
 ### 💪 Recursos Premium
+
 - ⏱️ Timer circular animado com efeitos visuais
 - 📳 Vibração de alerta nos exercícios
 - 📊 Histórico completo de treinos
@@ -34,26 +36,31 @@
 ## 🛠️ Tecnologias
 
 ### Core
+
 - **React 18.3** + **TypeScript 5.8**
 - **Vite 5.4** - Build tool ultra-rápido
 - **Framer Motion** - Animações fluidas
 
 ### UI/Design
+
 - **Tailwind CSS 3.4** - Utility-first CSS
 - **shadcn/ui** - Componentes premium
 - **Radix UI** - Primitivos acessíveis
 - **Lucide Icons** - Ícones modernos
 
 ### Tipografia
+
 - **Outfit** - Display/Headings
 - **Plus Jakarta Sans** - Body/UI
 - **Space Grotesk** - Números/Mono
 
 ### State Management
+
 - **Zustand** - State global minimalista
 - **localStorage** - Persistência de dados
 
 ### PWA
+
 - **Vite Plugin PWA** - Service Worker
 - **Workbox** - Cache strategies
 
@@ -62,6 +69,7 @@
 ## 🚀 Quick Start
 
 ### Pré-requisitos
+
 - **Node.js 20+**
 - **npm** ou **yarn**
 
@@ -88,19 +96,23 @@ Acesse `http://localhost:8080`
 ## 📦 Build & Deploy
 
 ### Build local
+
 ```bash
 npm run build
 ```
 
 ### Preview do build
+
 ```bash
 npm run preview
 ```
 
 ### Deploy no GitHub Pages
+
 O deploy é **automático** via GitHub Actions quando você faz push na branch `main`.
 
 Ou manualmente:
+
 ```bash
 npm run deploy
 ```
@@ -110,6 +122,7 @@ npm run deploy
 ## 🎨 Design System
 
 ### Paleta de Cores
+
 - **Primary**: `#f97316` (Laranja vibrante - energia)
 - **Primary Glow**: `#ff8c42` (Laranja brilhante)
 - **Accent**: `#16a34a` (Verde - sucesso/descanso)
@@ -117,6 +130,7 @@ npm run deploy
 - **Card**: `#1a1f29` (Surface elevado)
 
 ### Animações
+
 - Transições de página (300ms ease-in-out)
 - Timer com pulsação e shake
 - Cards com stagger animation
@@ -184,4 +198,3 @@ Se este projeto te ajudou, dê uma ⭐️!
     <a href="https://github.com/marquespq/fittimer-pro/issues">✨ Request Feature</a>
   </p>
 </div>
-

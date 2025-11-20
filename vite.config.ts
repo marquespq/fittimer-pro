@@ -6,7 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: process.env.VITE_BASE_URL || '/',
+  base: process.env.VITE_BASE_URL || "/",
   server: {
     host: "::",
     port: 8080,
@@ -20,7 +20,8 @@ export default defineConfig(({ mode }) => ({
       manifest: {
         name: "FitTimer - Cronômetro para Musculação",
         short_name: "FitTimer",
-        description: "Cronômetro inteligente para treinos de musculação com Biset, Trissérie, Dropset e Série Gigante",
+        description:
+          "Cronômetro inteligente para treinos de musculação com Biset, Trissérie, Dropset e Série Gigante",
         theme_color: "#f97316",
         background_color: "#1a1f2e",
         display: "standalone",

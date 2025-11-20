@@ -7,23 +7,27 @@
 ### ✅ Arquivos Criados/Atualizados
 
 #### GitHub Pages & CI/CD
+
 - ✅ `.github/workflows/deploy.yml` - GitHub Actions workflow
 - ✅ `public/.nojekyll` - Previne Jekyll do GitHub
 - ✅ `vite.config.ts` - Base URL configurada
 - ✅ `package.json` - Scripts de deploy adicionados
 
 #### SEO & Indexação
+
 - ✅ `public/sitemap.xml` - Sitemap para motores de busca
 - ✅ `public/robots.txt` - Instruções para crawlers
 - ✅ `public/schema.json` - Structured Data (Schema.org)
 - ✅ `index.html` - Meta tags otimizadas + JSON-LD
 
 #### Favicon & PWA
+
 - ✅ `public/favicon.svg` - Favicon moderno em SVG
 - ✅ `public/manifest.json` - PWA manifest atualizado
 - ✅ `public/favicon-generator.html` - Gerador de PNGs
 
 #### Documentação
+
 - ✅ `README.md` - Documentação completa
 - ✅ `DEPLOY.md` - Guia de deploy detalhado
 - ✅ `LICENSE` - Licença MIT
@@ -60,6 +64,7 @@ git push origin main
 1. Acesse: `https://github.com/marquespq/fittimer-pro/settings/pages`
 
 2. Configure:
+
    - **Source**: `GitHub Actions`
    - Salve as configurações
 
@@ -109,27 +114,35 @@ Aguarde alguns minutos após o deploy para propagação.
 ## 🧪 Testes Recomendados
 
 ### 1. Performance
+
 ```
 https://pagespeed.web.dev/
 ```
+
 Meta: 90+ em mobile e desktop
 
 ### 2. Meta Tags
+
 ```
 https://www.opengraph.xyz/
 ```
+
 Teste Open Graph e Twitter Cards
 
 ### 3. PWA
+
 ```
 https://web.dev/measure/
 ```
+
 Verifique instalabilidade e offline mode
 
 ### 4. Acessibilidade
+
 ```
 https://wave.webaim.org/
 ```
+
 Score esperado: 100/100
 
 ---
@@ -137,14 +150,17 @@ Score esperado: 100/100
 ## 📝 Notas Importantes
 
 ### URL do Repositório
+
 - Certifique-se: `https://github.com/marquespq/fittimer-pro.git`
 - Verifique com: `git remote -v`
 
 ### Base URL
+
 - Está configurada para: `/fittimer-pro/`
 - Automaticamente aplicada via env var no workflow
 
 ### Cache
+
 - Primeiro acesso pode demorar
 - Após cache: carregamento instantâneo
 - Force refresh: `Ctrl + Shift + R`
