@@ -1,12 +1,79 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { WorkoutMode, WorkoutConfig } from '@/types/timer';
+import { useTimerStore } from '@/store/timerStore';
+import { ModeSelector } from '@/components/ModeSelector';
+import { ExerciseConfig } from '@/components/ExerciseConfig';
+import { TimerScreen } from '@/components/TimerScreen';
+import { History } from '@/components/History';
+import { Button } from '@/components/ui/button';
+import { History as HistoryIcon } from 'lucide-react';
+
+type Screen = 'mode-select' | 'config' | 'timer' | 'history';
 
 const Index = () => {
+  const [screen, setScreen] = useState<Screen>('mode-select');
+  const [selectedMode, setSelectedMode] = useState<WorkoutMode | null>(null);
+  const { setConfig, start, timerState } = useTimerStore();
+
+  // If there's an active session, show timer
+  if (timerState.isRunning && screen !== 'timer') {
+    setScreen('timer');
+  }
+
+  const handleModeSelect = (mode: WorkoutMode) => {
+    setSelectedMode(mode);
+    setScreen('config');
+  };
+
+  const handleStartWorkout = (config: WorkoutConfig) => {
+    setConfig(config);
+    start();
+    setScreen('timer');
+  };
+
+  const handleBackToModeSelect = () => {
+    setSelectedMode(null);
+    setScreen('mode-select');
+  };
+
+  const showHistory = () => {
+    setScreen('history');
+  };
+
+  const hideHistory = () => {
+    setScreen('mode-select');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="relative min-h-screen bg-background">
+      {/* History button - floating on mode select screen */}
+      {screen === 'mode-select' && (
+        <Button
+          onClick={showHistory}
+          variant="outline"
+          size="icon"
+          className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full shadow-lg border-border bg-card text-foreground"
+        >
+          <HistoryIcon className="w-5 h-5" />
+        </Button>
+      )}
+
+      {/* Screen routing */}
+      {screen === 'mode-select' && (
+        <ModeSelector onSelect={handleModeSelect} />
+      )}
+
+      {screen === 'config' && selectedMode && (
+        <ExerciseConfig
+          mode={selectedMode}
+          onBack={handleBackToModeSelect}
+          onStart={handleStartWorkout}
+        />
+      )}
+
+      {screen === 'timer' && <TimerScreen />}
+
+      {screen === 'history' && <History onBack={hideHistory} />}
     </div>
   );
 };
