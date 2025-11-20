@@ -11,7 +11,11 @@ import {
   ChevronRight,
 } from 'lucide-react';
 
-export const TimerScreen = () => {
+interface TimerScreenProps {
+  onEnd: () => void;
+}
+
+export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
   const {
     config,
     timerState,
@@ -41,7 +45,7 @@ export const TimerScreen = () => {
   const handleEnd = () => {
     if (window.confirm('Deseja encerrar o treino?')) {
       endSession();
-      reset();
+      onEnd();
     }
   };
 

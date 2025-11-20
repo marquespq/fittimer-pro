@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WorkoutMode, WorkoutConfig } from '@/types/timer';
 import { useTimerStore } from '@/store/timerStore';
 import { ModeSelector } from '@/components/ModeSelector';
@@ -13,12 +13,14 @@ type Screen = 'mode-select' | 'config' | 'timer' | 'history';
 const Index = () => {
   const [screen, setScreen] = useState<Screen>('mode-select');
   const [selectedMode, setSelectedMode] = useState<WorkoutMode | null>(null);
-  const { setConfig, start, timerState } = useTimerStore();
+  const { setConfig, start, timerState, reset } = useTimerStore();
 
-  // If there's an active session, show timer
-  if (timerState.isRunning && screen !== 'timer') {
-    setScreen('timer');
-  }
+  // Check for active session on mount and restore timer screen if needed
+  useEffect(() => {
+    if (timerState.isRunning && screen === 'mode-select') {
+      setScreen('timer');
+    }
+  }, [timerState.isRunning]);
 
   const handleModeSelect = (mode: WorkoutMode) => {
     setSelectedMode(mode);
@@ -33,6 +35,11 @@ const Index = () => {
 
   const handleBackToModeSelect = () => {
     setSelectedMode(null);
+    setScreen('mode-select');
+  };
+
+  const handleEndWorkout = () => {
+    reset();
     setScreen('mode-select');
   };
 
@@ -71,7 +78,7 @@ const Index = () => {
         />
       )}
 
-      {screen === 'timer' && <TimerScreen />}
+      {screen === 'timer' && <TimerScreen onEnd={handleEndWorkout} />}
 
       {screen === 'history' && <History onBack={hideHistory} />}
     </div>
