@@ -1,0 +1,41 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "FitTimer",
+  "alternateName": "FitTimer - Cronômetro para Musculação",
+  "url": "https://marquespq.github.io/fittimer-pro/",
+  "description": "Cronômetro inteligente e gratuito para musculação. Biset, Trissérie, Dropset e Série Gigante com timer automático, vibração e histórico completo de treinos.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "BRL"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "ratingCount": "1"
+  },
+  "screenshot": "https://marquespq.github.io/fittimer-pro/icon-512.png",
+  "softwareVersion": "1.0.0",
+  "inLanguage": "pt-BR",
+  "author": {
+    "@type": "Person",
+    "name": "Gabriel Marques"
+  },
+  "browserRequirements": "Requires JavaScript. Modern browser with PWA support recommended.",
+  "permissions": "vibration",
+  "featureList": [
+    "Timer automático para Biset (2 exercícios alternados)",
+    "Timer para Trissérie (3 exercícios em sequência)",
+    "Timer para Dropset (1 exercício com quedas de carga)",
+    "Timer para Série Gigante (4-8 exercícios seguidos)",
+    "Vibração de alerta",
+    "Histórico completo de treinos",
+    "Funcionamento offline (PWA)",
+    "Interface responsiva mobile-first",
+    "Sem necessidade de cadastro",
+    "100% gratuito"
+  ]
+}

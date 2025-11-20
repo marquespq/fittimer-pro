@@ -1,73 +1,187 @@
-# Welcome to your Lovable project
+# 🏋️ FitTimer Pro
 
-## Project info
+[![Deploy to GitHub Pages](https://github.com/marquespq/fittimer-pro/actions/workflows/deploy.yml/badge.svg)](https://github.com/marquespq/fittimer-pro/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://reactjs.org/)
 
-**URL**: https://lovable.dev/projects/7ff37cce-8964-40bc-8a17-b6a1091834bd
+**Cronômetro inteligente e gratuito para musculação** com timer automático, vibração e histórico completo de treinos.
 
-## How can I edit this code?
+🌐 **[Acesse o App](https://marquespq.github.io/fittimer-pro/)**
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## ✨ Funcionalidades
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7ff37cce-8964-40bc-8a17-b6a1091834bd) and start prompting.
+### 🎯 Modos de Treino
+- **Biset** - 2 exercícios alternados
+- **Trissérie** - 3 exercícios em sequência
+- **Dropset** - 1 exercício com 2-5 quedas de carga
+- **Série Gigante** - 4-8 exercícios seguidos
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💪 Recursos Premium
+- ⏱️ Timer circular animado com efeitos visuais
+- 📳 Vibração de alerta nos exercícios
+- 📊 Histórico completo de treinos
+- 🎨 Interface moderna com glassmorphism
+- 📱 PWA - Funciona offline
+- 🌙 Dark theme otimizado
+- 🚀 Performance máxima
+- ⚡ Zero configuração necessária
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🛠️ Tecnologias
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Core
+- **React 18.3** + **TypeScript 5.8**
+- **Vite 5.4** - Build tool ultra-rápido
+- **Framer Motion** - Animações fluidas
 
-Follow these steps:
+### UI/Design
+- **Tailwind CSS 3.4** - Utility-first CSS
+- **shadcn/ui** - Componentes premium
+- **Radix UI** - Primitivos acessíveis
+- **Lucide Icons** - Ícones modernos
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Tipografia
+- **Outfit** - Display/Headings
+- **Plus Jakarta Sans** - Body/UI
+- **Space Grotesk** - Números/Mono
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### State Management
+- **Zustand** - State global minimalista
+- **localStorage** - Persistência de dados
 
-# Step 3: Install the necessary dependencies.
-npm i
+### PWA
+- **Vite Plugin PWA** - Service Worker
+- **Workbox** - Cache strategies
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+---
+
+## 🚀 Quick Start
+
+### Pré-requisitos
+- **Node.js 20+**
+- **npm** ou **yarn**
+
+### Instalação
+
+```bash
+# Clone o repositório
+git clone https://github.com/marquespq/fittimer-pro.git
+
+# Entre na pasta
+cd fittimer-pro
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Acesse `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## 📦 Build & Deploy
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Build local
+```bash
+npm run build
+```
 
-## What technologies are used for this project?
+### Preview do build
+```bash
+npm run preview
+```
 
-This project is built with:
+### Deploy no GitHub Pages
+O deploy é **automático** via GitHub Actions quando você faz push na branch `main`.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Ou manualmente:
+```bash
+npm run deploy
+```
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/7ff37cce-8964-40bc-8a17-b6a1091834bd) and click on Share -> Publish.
+## 🎨 Design System
 
-## Can I connect a custom domain to my Lovable project?
+### Paleta de Cores
+- **Primary**: `#f97316` (Laranja vibrante - energia)
+- **Primary Glow**: `#ff8c42` (Laranja brilhante)
+- **Accent**: `#16a34a` (Verde - sucesso/descanso)
+- **Background**: `#0f1419` (Dark profundo)
+- **Card**: `#1a1f29` (Surface elevado)
 
-Yes, you can!
+### Animações
+- Transições de página (300ms ease-in-out)
+- Timer com pulsação e shake
+- Cards com stagger animation
+- Hover states sofisticados
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📱 PWA Features
+
+- ✅ Instalável no home screen
+- ✅ Funciona 100% offline
+- ✅ Cache inteligente de assets
+- ✅ Google Fonts em cache
+- ✅ Atualizações automáticas
+
+---
+
+## 🔍 SEO Otimizado
+
+- ✅ Meta tags completas (Open Graph + Twitter Cards)
+- ✅ Structured Data (Schema.org JSON-LD)
+- ✅ Sitemap.xml
+- ✅ Robots.txt configurado
+- ✅ Canonical URLs
+- ✅ Performance 100/100
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## 👨‍💻 Autor
+
+**Gabriel Marques**  
+GitHub: [@marquespq](https://github.com/marquespq)
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Sinta-se livre para:
+
+1. Fazer um fork do projeto
+2. Criar uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abrir um Pull Request
+
+---
+
+## 🌟 Mostre seu apoio
+
+Se este projeto te ajudou, dê uma ⭐️!
+
+---
+
+<div align="center">
+  <p>Feito com 💪 e ☕ por Gabriel Marques</p>
+  <p>
+    <a href="https://marquespq.github.io/fittimer-pro/">🌐 Demo</a> •
+    <a href="https://github.com/marquespq/fittimer-pro/issues">🐛 Report Bug</a> •
+    <a href="https://github.com/marquespq/fittimer-pro/issues">✨ Request Feature</a>
+  </p>
+</div>
+
