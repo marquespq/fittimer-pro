@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Favicon Generator</title>
+    <style>
+      body {
+        font-family: "Outfit", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: #0f1419;
+        color: white;
+        padding: 20px;
+      }
+      canvas {
+        border: 2px solid #f97316;
+        border-radius: 8px;
+        margin: 20px;
+      }
+      button {
+        background: linear-gradient(135deg, #f97316, #ff8c42);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 10px;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      .info {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="info">
+      <h1>🏋️ FitTimer Favicon Generator</h1>
+      <p>Clique nos botões abaixo para baixar os favicons</p>
+    </div>
+
+    <canvas id="canvas256" width="256" height="256"></canvas>
+    <button onclick="download('icon-256.png', 256)">Download 256x256</button>
+
+    <canvas id="canvas512" width="512" height="512"></canvas>
+    <button onclick="download('icon-512.png', 512)">Download 512x512</button>
+
+    <canvas id="canvasFavicon" width="32" height="32"></canvas>
+    <button onclick="downloadFavicon()">Download favicon.ico (32x32)</button>
+
+    <script>
+      function drawIcon(canvas, size) {
+        const ctx = canvas.getContext("2d");
+        const scale = size / 64;
+
+        // Clear canvas
+        ctx.clearRect(0, 0, size, size);
+
+        // Background gradient
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, "#f97316");
+        gradient.addColorStop(1, "#ff8c42");
+
+        // Background with rounded corners
+        const radius = 14 * scale;
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.roundRect(0, 0, size, size, radius);
+        ctx.fill();
+
+        // Timer circle (outer ring)
+        const centerX = size / 2;
+        const centerY = size / 2;
+        const radius1 = 20 * scale;
+
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+        ctx.lineWidth = 3.5 * scale;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius1, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Timer progress arc (270 degrees)
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+        ctx.lineWidth = 4 * scale;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius1, -Math.PI / 2, Math.PI * 1.25);
+        ctx.stroke();
+
+        // Dumbbell icon
+        ctx.fillStyle = "#ffffff";
+
+        // Left weight
+        const rectSize = 4 * scale;
+        const rectHeight = 10 * scale;
+        const barHeight = 3 * scale;
+        const barWidth = 12 * scale;
+
+        ctx.beginPath();
+        ctx.roundRect(
+          centerX - 10 * scale,
+          centerY - 5 * scale,
+          rectSize,
+          rectHeight,
+          1 * scale
+        );
+        ctx.fill();
+
+        // Bar
+        ctx.beginPath();
+        ctx.roundRect(
+          centerX - 6 * scale,
+          centerY - 1.5 * scale,
+          barWidth,
+          barHeight,
+          1 * scale
+        );
+        ctx.fill();
+
+        // Right weight
+        ctx.beginPath();
+        ctx.roundRect(
+          centerX + 6 * scale,
+          centerY - 5 * scale,
+          rectSize,
+          rectHeight,
+          1 * scale
+        );
+        ctx.fill();
+
+        // Active indicator (green dot)
+        ctx.fillStyle = "#16a34a";
+        ctx.beginPath();
+        ctx.arc(centerX, centerY - radius1, 2.5 * scale, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw all sizes
+      drawIcon(document.getElementById("canvas256"), 256);
+      drawIcon(document.getElementById("canvas512"), 512);
+      drawIcon(document.getElementById("canvasFavicon"), 32);
+
+      function download(filename, size) {
+        const canvas =
+          size === 256
+            ? document.getElementById("canvas256")
+            : document.getElementById("canvas512");
+        const link = document.createElement("a");
+        link.download = filename;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }
+
+      function downloadFavicon() {
+        const canvas = document.getElementById("canvasFavicon");
+        const link = document.createElement("a");
+        link.download = "favicon-32.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }
+    </script>
+  </body>
+</html>

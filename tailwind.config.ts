@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -13,6 +18,12 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Outfit", "sans-serif"],
+        body: ["Plus Jakarta Sans", "sans-serif"],
+        mono: ["Space Grotesk", "monospace"],
+        sans: ["Plus Jakarta Sans", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -82,8 +93,8 @@ export default {
             transform: "scale(1)",
           },
           "50%": {
-            opacity: "0.8",
-            transform: "scale(1.05)",
+            opacity: "0.85",
+            transform: "scale(1.02)",
           },
         },
         "slide-up": {
@@ -104,6 +115,25 @@ export default {
             transform: "rotate(360deg)",
           },
         },
+        shake: {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "10%, 30%, 50%, 70%, 90%": {
+            transform: "translateX(-4px)",
+          },
+          "20%, 40%, 60%, 80%": {
+            transform: "translateX(4px)",
+          },
+        },
+        shimmer: {
+          "0%": {
+            backgroundPosition: "-1000px 0",
+          },
+          "100%": {
+            backgroundPosition: "1000px 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -111,6 +141,8 @@ export default {
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "slide-up": "slide-up 0.3s ease-out",
         "timer-tick": "timer-tick 1s linear infinite",
+        shake: "shake 0.5s ease-in-out infinite",
+        shimmer: "shimmer 2s linear infinite",
       },
     },
   },

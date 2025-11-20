@@ -1,37 +1,25 @@
-import { useTimer } from '@/hooks/useTimer';
-import { useTimerStore } from '@/store/timerStore';
-import { CircularTimer } from '@/components/CircularTimer';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { 
-  Pause, 
-  Play, 
-  SkipForward, 
-  X,
-  ChevronRight,
-} from 'lucide-react';
+import { useTimer } from "@/hooks/useTimer";
+import { useTimerStore } from "@/store/timerStore";
+import { CircularTimer } from "@/components/CircularTimer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Pause, Play, SkipForward, X, ChevronRight } from "lucide-react";
 
 interface TimerScreenProps {
   onEnd: () => void;
 }
 
 export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
-  const {
-    config,
-    timerState,
-    pause,
-    resume,
-    reset,
-    nextExercise,
-    skipRest,
-  } = useTimerStore();
+  const { config, timerState, pause, resume, reset, nextExercise, skipRest } =
+    useTimerStore();
 
   const { endSession } = useTimer();
 
   if (!config) return null;
 
   const currentExercise = config.exercises[timerState.currentExerciseIndex];
-  const nextExerciseIndex = (timerState.currentExerciseIndex + 1) % config.exercises.length;
+  const nextExerciseIndex =
+    (timerState.currentExerciseIndex + 1) % config.exercises.length;
   const nextExercise_display = config.exercises[nextExerciseIndex];
 
   const handlePauseResume = () => {
@@ -43,7 +31,7 @@ export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
   };
 
   const handleEnd = () => {
-    if (window.confirm('Deseja encerrar o treino?')) {
+    if (window.confirm("Deseja encerrar o treino?")) {
       endSession();
       onEnd();
     }
@@ -54,12 +42,15 @@ export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div>
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-2xl font-display font-bold text-foreground">
             {config.mode.charAt(0).toUpperCase() + config.mode.slice(1)}
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground font-body">
             Ciclo {timerState.currentCycle + 1}
-            {config.mode === 'dropset' && ` • Drop ${timerState.currentDrop + 1}/${config.dropsPerExercise || 3}`}
+            {config.mode === "dropset" &&
+              ` • Drop ${timerState.currentDrop + 1}/${
+                config.dropsPerExercise || 3
+              }`}
           </p>
         </div>
         <Button
@@ -76,7 +67,9 @@ export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
       <div className="flex-1 flex flex-col justify-center p-6">
         <CircularTimer
           timeRemaining={timerState.timeRemaining}
-          totalTime={timerState.isResting ? config.restTime : config.exerciseTime}
+          totalTime={
+            timerState.isResting ? config.restTime : config.exerciseTime
+          }
           isResting={timerState.isResting}
         />
 
@@ -84,27 +77,34 @@ export const TimerScreen = ({ onEnd }: TimerScreenProps) => {
         <Card className="mt-8 p-6 bg-card border-border text-center">
           {timerState.isResting ? (
             <>
-              <p className="text-sm text-muted-foreground mb-2">Descansando...</p>
-              <h3 className="text-2xl font-bold text-accent">Intervalo</h3>
+              <p className="text-sm text-muted-foreground mb-2 font-body">
+                Descansando...
+              </p>
+              <h3 className="text-3xl font-display font-bold text-accent">
+                Intervalo
+              </h3>
             </>
           ) : (
             <>
-              <p className="text-sm text-muted-foreground mb-2">
-                {config.mode === 'dropset' ? `Drop ${timerState.currentDrop + 1}` : 'Exercício Atual'}
+              <p className="text-sm text-muted-foreground mb-2 font-body">
+                {config.mode === "dropset"
+                  ? `Drop ${timerState.currentDrop + 1}`
+                  : "Exercício Atual"}
               </p>
-              <h3 className="text-2xl font-bold text-foreground">
-                {currentExercise?.name || `Exercício ${timerState.currentExerciseIndex + 1}`}
+              <h3 className="text-3xl font-display font-bold text-foreground">
+                {currentExercise?.name ||
+                  `Exercício ${timerState.currentExerciseIndex + 1}`}
               </h3>
             </>
           )}
         </Card>
 
         {/* Next Exercise */}
-        {!timerState.isResting && config.mode !== 'dropset' && (
+        {!timerState.isResting && config.mode !== "dropset" && (
           <div className="mt-4 flex items-center justify-center gap-2 text-muted-foreground">
             <span className="text-sm">Próximo:</span>
             <span className="text-sm font-medium">
-              {nextExercise_display?.name || 'Descanso'}
+              {nextExercise_display?.name || "Descanso"}
             </span>
             <ChevronRight className="w-4 h-4" />
           </div>

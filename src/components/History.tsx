@@ -1,9 +1,10 @@
-import { useTimerStore } from '@/store/timerStore';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { ArrowLeft, Clock, Calendar, Trash2 } from 'lucide-react';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { useTimerStore } from "@/store/timerStore";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ArrowLeft, Clock, Calendar, Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { motion } from "framer-motion";
 
 interface HistoryProps {
   onBack: () => void;
@@ -19,7 +20,7 @@ export const History = ({ onBack }: HistoryProps) => {
   };
 
   const handleClearHistory = () => {
-    if (window.confirm('Deseja limpar todo o histórico?')) {
+    if (window.confirm("Deseja limpar todo o histórico?")) {
       clearHistory();
     }
   };
@@ -37,8 +38,10 @@ export const History = ({ onBack }: HistoryProps) => {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Histórico</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-3xl font-display font-bold text-foreground">
+              Histórico
+            </h2>
+            <p className="text-sm text-muted-foreground font-body">
               {history.length} treinos registrados
             </p>
           </div>
@@ -68,66 +71,78 @@ export const History = ({ onBack }: HistoryProps) => {
           </div>
         ) : (
           <div className="space-y-4 max-w-2xl mx-auto">
-            {history.map((session) => (
-              <Card
+            {history.map((session, index) => (
+              <motion.div
                 key={session.id}
-                className="p-6 bg-card border-border"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground capitalize">
-                      {session.config.mode}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-                      <Calendar className="w-4 h-4" />
-                      {format(new Date(session.startTime), "d 'de' MMMM 'às' HH:mm", {
-                        locale: ptBR,
-                      })}
+                <Card className="p-6 bg-card border-border hover:scale-[1.01] hover:shadow-xl hover:border-primary/30 transition-all duration-300">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-display font-bold text-foreground capitalize">
+                        {session.config.mode}
+                      </h3>
+                      <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground font-body">
+                        <Calendar className="w-4 h-4" />
+                        {format(
+                          new Date(session.startTime),
+                          "d 'de' MMMM 'às' HH:mm",
+                          {
+                            locale: ptBR,
+                          }
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-3xl font-mono font-bold text-primary tabular-nums">
+                        {session.cyclesCompleted}
+                      </div>
+                      <div className="text-xs text-muted-foreground uppercase tracking-wider font-body">
+                        ciclos
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-primary">
-                      {session.cyclesCompleted}
-                    </div>
-                    <div className="text-xs text-muted-foreground">ciclos</div>
-                  </div>
-                </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Exercícios:</span>
-                    <span className="text-foreground font-medium">
-                      {session.config.exercises.length}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Duração:</span>
-                    <span className="text-foreground font-medium">
-                      {formatDuration(session.totalTime)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Tempo/Ex:</span>
-                    <span className="text-foreground font-medium">
-                      {session.config.exerciseTime}s
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-4 border-t border-border">
-                  <p className="text-xs text-muted-foreground mb-2">Exercícios:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {session.config.exercises.map((ex, idx) => (
-                      <span
-                        key={ex.id}
-                        className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded"
-                      >
-                        {ex.name || `Ex ${idx + 1}`}
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Exercícios:</span>
+                      <span className="text-foreground font-medium">
+                        {session.config.exercises.length}
                       </span>
-                    ))}
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Duração:</span>
+                      <span className="text-foreground font-medium">
+                        {formatDuration(session.totalTime)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Tempo/Ex:</span>
+                      <span className="text-foreground font-medium">
+                        {session.config.exerciseTime}s
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Card>
+
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Exercícios:
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {session.config.exercises.map((ex, idx) => (
+                        <span
+                          key={ex.id}
+                          className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded"
+                        >
+                          {ex.name || `Ex ${idx + 1}`}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
           </div>
         )}
